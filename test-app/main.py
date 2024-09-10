@@ -8,7 +8,7 @@ CLIENT_ID = os.getenv("KEYCLOAK_CLIENT_ID")
 CLIENT_SECRET = os.getenv("KEYCLOAK_CLIENT_SECRET")
 AUTHORITY = os.getenv("KEYCLOAK_AUTHORITY")
 REDIRECT_URI = os.getenv("KEYCLOAK_REDIRECT_URI")
-SCOPE = os.getenv("KEYCLOAK_SCOPE", "openid profile email")
+SCOPE = os.getenv("KEYCLOAK_SCOPE", "openid")
 
 # Funktion zur Authentifizierung und Abruf des Tokens
 def authenticate_user(auth_code):
