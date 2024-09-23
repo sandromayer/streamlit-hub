@@ -72,4 +72,33 @@ class KeycloakAuth:
 
             return wrapper
 
+        def require_any_role(self, roles):
+            """
+            Ein Decorator, der überprüft, ob der Benutzer mindestens eine der angegebenen Rollen hat (ODER-Logik).
+            """
+
+            def decorator(func):
+                @wraps(func)
+                def wrapper(*args, **kwargs):
+                    if "token" not in st.session_state:
+                        st.error("Sie sind nicht eingeloggt.")
+                        auth_code = st.experimental_get_query_params().get("code")
+                        if not auth_code:
+                            self.oidc_login()
+                        token_data = self.authenticate_user(auth_code[0])
+                        st.session_state["token"] = token_data["access_token"]
+
+                    id_token = st.session_state["token"]
+
+                    # Mindestens eine der Rollen muss erfüllt sein (ODER-Logik)
+                    if not any(self.check_role(id_token, role) for role in roles):
+                        st.error(
+                            f"Zugriff verweigert: Sie benötigen mindestens eine der folgenden Rollen: {', '.join(roles)}.")
+                        return None
+                    return func(*args, **kwargs)
+
+                return wrapper
+
+            return decorator
+
         return decorator
