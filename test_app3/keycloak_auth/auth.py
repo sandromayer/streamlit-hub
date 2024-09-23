@@ -9,7 +9,7 @@ class KeycloakAuth:
         self.client_id = os.getenv('KEYCLOAK_CLIENT_ID')
         self.client_secret = os.getenv('KEYCLOAK_CLIENT_SECRET')
         self.realm = os.getenv('KEYCLOAK_REALM')
-        self.authority = os.getenv('KEYCLOAK_URL')
+        self.authority = os.getenv('KEYCLOAK_AUTHORITY')
         self.redirect_uri = os.getenv("KEYCLOAK_REDIRECT_URI")
         self.scope = "openid"
 
