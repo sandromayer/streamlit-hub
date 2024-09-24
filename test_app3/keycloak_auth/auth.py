@@ -11,10 +11,10 @@ controller = CookieController()
 class KeycloakAuth:
     def __init__(self):
         self.client_id = os.getenv('KEYCLOAK_CLIENT_ID', "streamlit")
-        self.client_secret = os.getenv('KEYCLOAK_CLIENT_SECRET', "JAHVEBHTA8swRWZjr2a5WsSZ3zO6zaiB")
-        self.realm = os.getenv('KEYCLOAK_REALM', "test")
-        self.authority = os.getenv('KEYCLOAK_AUTHORITY', "http://192.168.59.1:8080/realms/test")
-        self.redirect_uri = os.getenv("KEYCLOAK_REDIRECT_URI", "http://localhost:8501")
+        self.client_secret = os.getenv('KEYCLOAK_CLIENT_SECRET')
+        self.realm = os.getenv('KEYCLOAK_REALM')
+        self.authority = os.getenv('KEYCLOAK_AUTHORITY')
+        self.redirect_uri = os.getenv("KEYCLOAK_REDIRECT_URI")
         self.scope = "openid"
 
     def authenticate_user(self, auth_code):
