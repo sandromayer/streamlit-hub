@@ -7,13 +7,14 @@ auth = KeycloakAuth()
 # Titel der App
 st.title("OIDC Authentifizierte Streamlit App")
 
-# Beispiel einer Funktion mit zwei Gruppen von Rollen:
-# - Gruppe 1: Der Benutzer muss "a" ODER "b" haben.
-# - Gruppe 2: Der Benutzer muss "c" ODER "d" haben.
-@auth.require_any_role(["test_role2","test_role"])
-@auth.require_any_role(["test_role"])
+# Beispiel einer Funktion, die geschützt ist
+@auth.require_role(['admin', 'test_role'], logic="OR")
+@auth.require_role(['admin', 'test_role2'], logic="OR")
 def protected_section():
-    st.write("Sie haben Zugriff, weil Sie mindestens eine Rolle aus jeder Gruppe besitzen.")
+    st.write("Sie haben Zugriff auf diese geschützte Sektion, weil Sie die erforderliche Rolle besitzen.")
 
-# Rufe die Funktion auf
+# Zeige die geschützte Sektion an
 protected_section()
+
+# Normale Sektion der App
+st.write("Dies ist eine öffentliche Sektion der App.")
